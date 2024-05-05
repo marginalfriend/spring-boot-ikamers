@@ -12,12 +12,12 @@ public class SellerController {
     SellerService service;
 
     @PostMapping("/new")
-    public Seller createNewSeller(@RequestBody Seller seller) {
-        return service.createSeller(seller);
+    public SellerEntity createNewSeller(@RequestBody SellerEntity sellerEntity) {
+        return service.createSeller(sellerEntity);
     }
 
     @GetMapping
-    public Seller getSellerById(@RequestBody UUID sellerId) {
+    public SellerEntity getSellerById(@RequestBody UUID sellerId) {
         return service.findSellerById(sellerId);
     }
 }

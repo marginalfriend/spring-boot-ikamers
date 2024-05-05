@@ -1,6 +1,7 @@
 package io.abun.springbootikamers.ProductServices;
 
-import io.abun.springbootikamers.SellerServices.Seller;
+import io.abun.springbootikamers.SellerServices.SellerEntity;
+import io.abun.springbootikamers.SellerServices.SellerRecord;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 
@@ -18,5 +19,5 @@ public record Product(
         Double price,
         @ManyToOne
         @JoinColumn(name = "seller_id")
-        Seller seller
+        SellerEntity seller
 ) {}

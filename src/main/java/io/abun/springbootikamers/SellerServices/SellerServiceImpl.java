@@ -29,18 +29,18 @@ public class SellerServiceImpl implements SellerService{
 
     // METHODS --- METHODS --- METHODS --- METHODS --- METHODS --- METHODS --- METHODS
     @Override
-    public Seller createSeller(Seller seller) {
-        return repository.saveAndFlush(seller);
+    public SellerEntity createSeller(SellerEntity sellerEntity) {
+        return repository.saveAndFlush(sellerEntity);
     }
 
     @Override
-    public Seller findSellerById(UUID id) {
-        Optional<Seller> opt = repository.findById(id);
+    public SellerEntity findSellerById(UUID id) {
+        Optional<SellerEntity> opt = repository.findById(id);
         return opt.orElse(null);
     }
 
     @Override
-    public void removeSeller(Seller seller) {
-        repository.delete(seller);
+    public void removeSeller(SellerEntity sellerEntity) {
+        repository.delete(sellerEntity);
     }
 }
