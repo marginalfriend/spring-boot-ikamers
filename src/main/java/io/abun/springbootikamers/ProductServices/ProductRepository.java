@@ -1,7 +1,10 @@
 package io.abun.springbootikamers.ProductServices;
-import org.springframework.data.repository.ListCrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface ProductRepository extends ListCrudRepository {
+import java.util.UUID;
+
+@Repository // JpaRepository extends PagingAndSortingRepository it's like ListCrudRepository on steroid
+public interface ProductRepository extends JpaRepository<Product, UUID> {
+
 }
