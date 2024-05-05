@@ -6,4 +6,5 @@ import java.util.UUID;
 
 @Repository
 public interface SellerRepository extends JpaRepository<SellerEntity, UUID> {
+    SellerEntity findByName(String name);
 }

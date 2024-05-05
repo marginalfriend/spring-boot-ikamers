@@ -17,7 +17,12 @@ public class SellerController {
     }
 
     @GetMapping
-    public SellerEntity getSellerById(@RequestBody UUID sellerId) {
-        return service.findSellerById(sellerId);
+    public SellerEntity getSellerById(@RequestBody UUID id) {
+        return service.findSellerById(id);
+    }
+
+    @GetMapping("/{name}")
+    public SellerEntity getSellerByName(@PathVariable String name) {
+        return service.findByName(name);
     }
 }

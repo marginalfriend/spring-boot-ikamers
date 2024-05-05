@@ -3,6 +3,7 @@ package io.abun.springbootikamers.SellerServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -37,6 +38,16 @@ public class SellerServiceImpl implements SellerService{
     public SellerEntity findSellerById(UUID id) {
         Optional<SellerEntity> opt = repository.findById(id);
         return opt.orElse(null);
+    }
+
+    @Override
+    public List<SellerEntity> findPaginatedSeller() {
+        return repository.findAll();
+    }
+
+    @Override
+    public SellerEntity findByName(String name) {
+        return repository.findByName(name);
     }
 
     @Override
