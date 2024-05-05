@@ -3,9 +3,10 @@ import java.util.List;
 import java.util.UUID;
 
 public interface SellerService {
-    SellerEntity createSeller(SellerEntity sellerEntity);
-    SellerEntity findSellerById(UUID id);
-    List<SellerEntity> findPaginatedSeller();
+    SellerEntity create(SellerEntity sellerEntity);
+    SellerEntity update(SellerEntity seller);
+    SellerEntity findById(UUID id);
+    List<SellerEntity> findAll();
     SellerEntity findByName(String name);
-    void removeSeller(SellerEntity sellerEntity);
+    void remove(SellerEntity sellerEntity);
 }

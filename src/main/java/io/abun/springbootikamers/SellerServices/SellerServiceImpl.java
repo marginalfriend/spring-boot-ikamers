@@ -30,18 +30,23 @@ public class SellerServiceImpl implements SellerService{
 
     // METHODS --- METHODS --- METHODS --- METHODS --- METHODS --- METHODS --- METHODS
     @Override
-    public SellerEntity createSeller(SellerEntity sellerEntity) {
+    public SellerEntity create(SellerEntity sellerEntity) {
         return repository.saveAndFlush(sellerEntity);
     }
 
     @Override
-    public SellerEntity findSellerById(UUID id) {
-        Optional<SellerEntity> opt = repository.findById(id);
-        return opt.orElse(null);
+    public SellerEntity update(SellerEntity seller) {
+        return repository.saveAndFlush(seller);
     }
 
     @Override
-    public List<SellerEntity> findPaginatedSeller() {
+    public SellerEntity findById(UUID id) {
+        Optional<SellerEntity> opt = repository.findById(id);
+        return opt.get();
+    }
+
+    @Override
+    public List<SellerEntity> findAll() {
         return repository.findAll();
     }
 
@@ -51,7 +56,7 @@ public class SellerServiceImpl implements SellerService{
     }
 
     @Override
-    public void removeSeller(SellerEntity sellerEntity) {
+    public void remove(SellerEntity sellerEntity) {
         repository.delete(sellerEntity);
     }
 }
