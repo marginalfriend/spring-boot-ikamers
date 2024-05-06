@@ -57,6 +57,6 @@ public class SellerServiceImpl implements SellerService{
 
     @Override
     public void remove(SellerEntity sellerEntity) {
-        repository.delete(sellerEntity);
+        repository.deleteById(sellerEntity.id);
     }
 }

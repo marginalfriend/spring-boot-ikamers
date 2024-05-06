@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+import org.hibernate.annotations.GenericGenerator;
 import java.util.UUID;
 
 @Entity(name = "sellers")
@@ -16,8 +16,10 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SellerEntity {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(generator = "uuid-hibernate-generator")
+    @GenericGenerator(name = "uuid-hibernate-generator", strategy = "org.hibernate.id.UUIDGenerator")
     UUID id;
     String name;
     @Transient
