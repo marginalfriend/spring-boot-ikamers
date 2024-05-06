@@ -1,4 +1,4 @@
-package io.abun.springbootikamers.ProductServices;
+package io.abun.springbootikamers.SellerServices.ProductServices;
 
 import io.abun.springbootikamers.SellerServices.SellerEntity;
 import jakarta.annotation.Nullable;

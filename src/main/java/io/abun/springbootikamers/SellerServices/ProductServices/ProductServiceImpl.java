@@ -1,4 +1,4 @@
-package io.abun.springbootikamers.ProductServices;
+package io.abun.springbootikamers.SellerServices.ProductServices;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
