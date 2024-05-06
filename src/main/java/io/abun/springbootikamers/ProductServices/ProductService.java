@@ -8,6 +8,7 @@ public interface ProductService {
     List<ProductEntity> searchProductByName(String name);
     List<ProductEntity> findPaginatedProducts(Integer pageNo, Integer pageSize);
     List<ProductEntity> findPaginatedProducts(Integer pageNo);
+    List<ProductEntity> findFilteredProducts(String title, Double pmin, Double pmax, Boolean available);
     ProductEntity getProductById(UUID id);
     ProductEntity createProduct(ProductEntity productRecord);
     void deleteProduct(ProductEntity productRecord);

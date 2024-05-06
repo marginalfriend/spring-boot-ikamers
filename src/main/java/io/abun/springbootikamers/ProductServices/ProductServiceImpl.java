@@ -6,8 +6,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -48,6 +51,32 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductEntity> findPaginatedProducts(Integer pageNo) {
         // Setting 10 as a default page size
         return findPaginatedProducts(pageNo, 10);
+    }
+
+    @Override
+    public List<ProductEntity> findFilteredProducts(String title, Double pmin, Double pmax, Boolean available) {
+        List<ProductEntity> primarySearch = repository.findAllByTitleLike('%' + title + '%');
+
+        // Filter functions
+        Predicate<ProductEntity> minPrice = product -> product.getPrice() > pmin;
+        Predicate<ProductEntity> maxPrice = product -> product.getPrice() < pmax;
+        Predicate<ProductEntity> isAvailable = product -> product.getStock() > 0;
+
+        // Shitload of conditionals
+        if (pmin != null) {
+            primarySearch = primarySearch.stream().filter(minPrice).toList();
+        }
+
+        if (pmax != null) {
+            primarySearch = primarySearch.stream().filter(maxPrice).toList();
+        }
+
+        if (available != null) {
+            primarySearch = primarySearch.stream().filter(isAvailable).toList()
+        }
+
+        // If null, it will return findAll
+        return Objects.requireNonNullElseGet(primarySearch, () -> repository.findAll());
     }
 
     @Override

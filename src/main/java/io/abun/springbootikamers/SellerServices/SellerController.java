@@ -22,23 +22,13 @@ public class SellerController {
         );
     }
 
-//    @GetMapping
-//    public List<SellerEntity> getAll() {
-//        return service.findAll();
-//    }
-
     @GetMapping
     public SellerEntity getByName(@RequestParam(required = false) String name) {
         return service.findByName(name);
     }
 
-    @PutMapping
-    public ProductRecord addProduct(@RequestBody ProductEntity product, @RequestParam String name) {
-        return service.addProduct(product, name);
-    }
-
     @GetMapping("/id")
-    public SellerRecord getById(@RequestHeader(value = "UUID") UUID id) {
+    public SellerRecord getById(@RequestHeader(value = "id") UUID id) {
         SellerEntity entity = service.findById(id);
         return new SellerRecord(
                 entity.getName(),
@@ -46,13 +36,13 @@ public class SellerController {
         );
     }
 
+    @PutMapping
+    public ProductRecord addProduct(@RequestBody ProductEntity product, @RequestParam String name) {
+        return service.addProduct(product, name);
+    }
+
     @DeleteMapping
     public void remove(@RequestBody SellerEntity seller) {
         service.remove(seller);
     }
-
-//    @PutMapping
-//    public SellerEntity update(@RequestBody SellerEntity seller) {
-//        return service.update(seller);
-//    }
 }
