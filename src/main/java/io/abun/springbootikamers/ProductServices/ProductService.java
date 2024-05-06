@@ -5,10 +5,10 @@ import java.util.UUID;
 
 public interface ProductService {
     // Using "WHERE title LIKE"
-    List<Product> searchProductByName(String name);
-    List<Product> findPaginatedProducts(Integer pageNo, Integer pageSize);
-    List<Product> findPaginatedProducts(Integer pageNo);
-    Product getProductById(UUID id);
-    Product createProduct(Product product);
-    void deleteProduct(Product product);
+    List<ProductEntity> searchProductByName(String name);
+    List<ProductEntity> findPaginatedProducts(Integer pageNo, Integer pageSize);
+    List<ProductEntity> findPaginatedProducts(Integer pageNo);
+    ProductEntity getProductById(UUID id);
+    ProductEntity createProduct(ProductEntity productRecord);
+    void deleteProduct(ProductEntity productRecord);
 }

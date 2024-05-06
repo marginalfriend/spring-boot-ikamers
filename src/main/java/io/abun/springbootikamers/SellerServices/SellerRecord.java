@@ -1,6 +1,6 @@
 package io.abun.springbootikamers.SellerServices;
 
-import io.abun.springbootikamers.ProductServices.Product;
+import io.abun.springbootikamers.ProductServices.ProductRecord;
 import jakarta.persistence.*;
 
 import java.util.UUID;
@@ -12,6 +12,6 @@ public record SellerRecord(
         String name,
         @Transient
         @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
-        Product products
+        ProductRecord products
 ) {
 }

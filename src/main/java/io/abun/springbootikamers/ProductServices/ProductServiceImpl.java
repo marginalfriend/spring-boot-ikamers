@@ -32,37 +32,37 @@ public class ProductServiceImpl implements ProductService {
     // --- + --- + --- Methods --- + --- + ---
 
     @Override
-    public List<Product> searchProductByName(String name) {
+    public List<ProductEntity> searchProductByName(String name) {
         return null;
     }
 
     @Override
-    public List<Product> findPaginatedProducts(Integer pageNo, Integer pageSize) {
+    public List<ProductEntity> findPaginatedProducts(Integer pageNo, Integer pageSize) {
         Pageable pageable = PageRequest.of(pageNo, pageSize);
-        Page<Product> page = repository.findAll(pageable);
+        Page<ProductEntity> page = repository.findAll(pageable);
         return page.getContent();
     }
 
 
     @Override
-    public List<Product> findPaginatedProducts(Integer pageNo) {
+    public List<ProductEntity> findPaginatedProducts(Integer pageNo) {
         // Setting 10 as a default page size
         return findPaginatedProducts(pageNo, 10);
     }
 
     @Override
-    public Product getProductById(UUID id) {
-        Optional<Product> opt = repository.findById(id);
+    public ProductEntity getProductById(UUID id) {
+        Optional<ProductEntity> opt = repository.findById(id);
         return opt.orElse(null);
     }
 
     @Override // Save and flush will immediately flush dem product into database
-    public Product createProduct(Product product) {
-        return repository.saveAndFlush(product);
+    public ProductEntity createProduct(ProductEntity productRecord) {
+        return repository.saveAndFlush(productRecord);
     }
 
     @Override
-    public void deleteProduct(Product product) {
-        repository.delete(product);
+    public void deleteProduct(ProductEntity productRecord) {
+        repository.delete(productRecord);
     }
 }

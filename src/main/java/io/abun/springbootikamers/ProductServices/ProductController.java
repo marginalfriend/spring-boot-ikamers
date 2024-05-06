@@ -27,12 +27,12 @@ public class ProductController {
     // Methods -- Methods -- Methods -- Methods -- Methods -- Methods -- Methods -- Methods -- Methods
 
     @PostMapping("/new")
-    public Product createProduct(@RequestBody Product product) {
-        return service.createProduct(product);
+    public ProductEntity createProduct(@RequestBody ProductEntity productRecord) {
+        return service.createProduct(productRecord);
     }
 
     @GetMapping("/page={page}")
-    public List<Product> findPaginatedProduct(@PathVariable Integer page) {
+    public List<ProductEntity> findPaginatedProduct(@PathVariable Integer page) {
         return service.findPaginatedProducts(page - 1);
     }
 }

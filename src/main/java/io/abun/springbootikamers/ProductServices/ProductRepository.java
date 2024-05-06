@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository // JpaRepository extends PagingAndSortingRepository it's like ListCrudRepository on steroid
-public interface ProductRepository extends JpaRepository<Product, UUID> {
+public interface ProductRepository extends JpaRepository<ProductEntity, UUID> {
 
 }

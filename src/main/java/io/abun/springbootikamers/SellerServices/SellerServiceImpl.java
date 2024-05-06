@@ -2,14 +2,12 @@ package io.abun.springbootikamers.SellerServices;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class SellerServiceImpl implements SellerService{
-    @Autowired
     SellerRepository repository;
 
     public SellerServiceImpl() {
@@ -42,7 +40,7 @@ public class SellerServiceImpl implements SellerService{
     @Override
     public SellerEntity findById(UUID id) {
         Optional<SellerEntity> opt = repository.findById(id);
-        return opt.get();
+        return opt.orElse(null);
     }
 
     @Override

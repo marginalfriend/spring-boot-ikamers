@@ -11,7 +11,6 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/sellers")
 public class SellerController {
-    @Autowired
     SellerService service;
 
     @PostMapping
