@@ -55,6 +55,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductEntity> findFilteredProducts(String title, Double pmin, Double pmax, Boolean available) {
+        if (title == null) {
+            return repository.findAll();
+        }
+
         List<ProductEntity> primarySearch = repository.findAllByTitleLike('%' + title + '%');
 
         // Filter functions
@@ -72,7 +76,7 @@ public class ProductServiceImpl implements ProductService {
         }
 
         if (available != null) {
-            primarySearch = primarySearch.stream().filter(isAvailable).toList()
+            primarySearch = primarySearch.stream().filter(isAvailable).toList();
         }
 
         // If null, it will return findAll

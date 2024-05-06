@@ -1,5 +1,6 @@
 package io.abun.springbootikamers.ProductServices;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -7,32 +8,26 @@ import java.util.List;
 @RestController
 @RequestMapping("/products")
 public class ProductController {
+    @Autowired
     ProductService service;
-
-    public ProductController(ProductService service) {
-        this.service = service;
-    }
-
-    public ProductController() {
-    }
-
-    public ProductService getService() {
-        return service;
-    }
-
-    public void setService(ProductService service) {
-        this.service = service;
-    }
-
-    // Methods -- Methods -- Methods -- Methods -- Methods -- Methods -- Methods -- Methods -- Methods
 
     @PostMapping("/new")
     public ProductEntity createProduct(@RequestBody ProductEntity productRecord) {
         return service.createProduct(productRecord);
     }
 
-    @GetMapping("/page={page}")
-    public List<ProductEntity> findPaginatedProduct(@PathVariable Integer page) {
-        return service.findPaginatedProducts(page - 1);
+    @GetMapping
+    List<ProductEntity> findAll(
+            @RequestParam(value = "search") String title,
+            @RequestParam(value = "pmin") Double pmin,
+            @RequestParam(value = "pmax") Double pmax,
+            @RequestParam(value = "available") Boolean available)
+    {
+        return service.findFilteredProducts(title, pmin, pmax, available);
     }
+
+//    @GetMapping("/page={page}")
+//    public List<ProductEntity> findPaginatedProduct(@PathVariable Integer page) {
+//        return service.findPaginatedProducts(page - 1);
+//    }
 }
