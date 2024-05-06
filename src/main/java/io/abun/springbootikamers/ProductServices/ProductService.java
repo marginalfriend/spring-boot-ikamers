@@ -1,4 +1,4 @@
-package io.abun.springbootikamers.SellerServices.ProductServices;
+package io.abun.springbootikamers.ProductServices;
 
 import java.util.List;
 import java.util.UUID;

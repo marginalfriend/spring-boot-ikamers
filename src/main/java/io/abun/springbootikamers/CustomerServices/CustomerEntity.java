@@ -1,9 +1,6 @@
 package io.abun.springbootikamers.CustomerServices;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -23,6 +20,7 @@ public class CustomerEntity {
     @GenericGenerator(name = "uuid-hibernate-generator", strategy = "org.hibernate.id.UUIDGenerator")
     UUID id;
     String name;
+    @Column(unique = true)
     String phone;
     Date birth;
     Boolean membership;

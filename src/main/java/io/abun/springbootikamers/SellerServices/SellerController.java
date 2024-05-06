@@ -1,10 +1,10 @@
 package io.abun.springbootikamers.SellerServices;
 
-import io.abun.springbootikamers.SellerServices.ProductServices.ProductEntity;
+import io.abun.springbootikamers.ProductServices.ProductEntity;
+import io.abun.springbootikamers.ProductServices.ProductRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -14,8 +14,12 @@ public class SellerController {
     SellerService service;
 
     @PostMapping
-    public SellerEntity create(@RequestBody SellerEntity sellerEntity) {
-        return service.create(sellerEntity);
+    public SellerRecord create(@RequestBody SellerEntity sellerEntity) {
+        SellerEntity entity = service.create(sellerEntity);
+        return new SellerRecord(
+                entity.getName(),
+                entity.getAddress()
+        );
     }
 
 //    @GetMapping
@@ -29,13 +33,17 @@ public class SellerController {
     }
 
     @PutMapping
-    public List<ProductEntity> addProduct(@RequestBody ProductEntity product,@RequestParam String name) {
+    public ProductRecord addProduct(@RequestBody ProductEntity product, @RequestParam String name) {
         return service.addProduct(product, name);
     }
 
     @GetMapping("/id")
-    public SellerEntity getById(@RequestHeader(value = "UUID") UUID id) {
-        return service.findById(id);
+    public SellerRecord getById(@RequestHeader(value = "UUID") UUID id) {
+        SellerEntity entity = service.findById(id);
+        return new SellerRecord(
+                entity.getName(),
+                entity.getAddress()
+        );
     }
 
     @DeleteMapping

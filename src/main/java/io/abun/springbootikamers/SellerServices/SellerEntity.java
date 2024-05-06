@@ -1,6 +1,6 @@
 package io.abun.springbootikamers.SellerServices;
 
-import io.abun.springbootikamers.SellerServices.ProductServices.ProductEntity;
+import io.abun.springbootikamers.ProductServices.ProductEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,9 +23,10 @@ public class SellerEntity {
     @GeneratedValue(generator = "uuid-hibernate-generator")
     @GenericGenerator(name = "uuid-hibernate-generator", strategy = "org.hibernate.id.UUIDGenerator")
     UUID id;
+    @Column(nullable = false)
     String name;
+    @Column(nullable = false)
     String address;
-    @Transient
     @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
     List<ProductEntity> products;
 }

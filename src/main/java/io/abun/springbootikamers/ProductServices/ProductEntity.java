@@ -1,4 +1,4 @@
-package io.abun.springbootikamers.SellerServices.ProductServices;
+package io.abun.springbootikamers.ProductServices;
 
 import io.abun.springbootikamers.SellerServices.SellerEntity;
 import jakarta.annotation.Nullable;
@@ -27,6 +27,6 @@ public class ProductEntity {
     Double price;
     Integer stock;
     @ManyToOne
-    @JoinColumn(name = "seller_id")
+    @JoinColumn(name = "seller_id", nullable = false)
     SellerEntity seller;
 }

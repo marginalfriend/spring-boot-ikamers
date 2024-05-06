@@ -1,4 +1,4 @@
-package io.abun.springbootikamers.SellerServices.ProductServices;
+package io.abun.springbootikamers.ProductServices;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

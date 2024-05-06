@@ -1,10 +1,10 @@
 package io.abun.springbootikamers.SellerServices;
 
-import io.abun.springbootikamers.SellerServices.ProductServices.ProductEntity;
+import io.abun.springbootikamers.ProductServices.ProductEntity;
+import io.abun.springbootikamers.ProductServices.ProductRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -63,14 +63,24 @@ public class SellerServiceImpl implements SellerService{
     }
 
     @Override
-    public List<ProductEntity> addProduct(ProductEntity product, String sellerName) {
+    public ProductRecord addProduct(ProductEntity product, String sellerName) {
         SellerEntity seller = repository.findByName(sellerName);
 
-        if (seller.getProducts() == null) {
-            seller.setProducts(new ArrayList<ProductEntity>());
+        if (seller == null) {
+            throw new RuntimeException("Seller with the name : " + sellerName + " is not available");
         }
 
+        product.setSeller(seller);
+
         seller.getProducts().add(product);
-        return seller.getProducts();
+        repository.saveAndFlush(seller);
+
+        return new ProductRecord(
+                product.getTitle(),
+                product.getDescription(),
+                product.getPrice(),
+                product.getStock(),
+                product.getSeller().getName()
+        );
     }
 }
