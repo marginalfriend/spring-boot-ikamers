@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.UUID;
 
 @Entity(name = "customers")

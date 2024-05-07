@@ -5,10 +5,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.UUID;
+
+import java.util.*;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -54,16 +53,29 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductEntity> findFilteredProducts(String title, Double pmin, Double pmax, Boolean available) {
+    public List<ProductRecord> findFilteredProducts(String title, Double pmin, Double pmax, Boolean available) {
+        List<ProductRecord> result = new ArrayList<>();
+
+        Consumer<ProductEntity> consumer = product -> {
+            result.add(new ProductRecord(
+                    product.getTitle(),
+                    product.getDescription(),
+                    product.getPrice(),
+                    product.getStock(),
+                    product.getSeller().getName()
+            ));
+        };
+
         if (title == null) {
-            return repository.findAll();
+            repository.findAll().forEach(consumer);
+            return result;
         }
 
-        List<ProductEntity> primarySearch = repository.findAllByTitleLike('%' + title + '%');
+        List<ProductEntity> primarySearch = repository.findAllByTitleLikeIgnoreCase('%' + title + '%');
 
         // Filter functions
-        Predicate<ProductEntity> minPrice = product -> product.getPrice() > pmin;
-        Predicate<ProductEntity> maxPrice = product -> product.getPrice() < pmax;
+        Predicate<ProductEntity> minPrice = product -> product.getPrice() >= pmin;
+        Predicate<ProductEntity> maxPrice = product -> product.getPrice() <= pmax;
         Predicate<ProductEntity> isAvailable = product -> product.getStock() > 0;
 
         // Shitload of conditionals
@@ -79,8 +91,8 @@ public class ProductServiceImpl implements ProductService {
             primarySearch = primarySearch.stream().filter(isAvailable).toList();
         }
 
-        // If null, it will return findAll
-        return Objects.requireNonNullElseGet(primarySearch, () -> repository.findAll());
+        primarySearch.forEach(consumer);
+        return result;
     }
 
     @Override

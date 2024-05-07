@@ -17,11 +17,11 @@ public class ProductController {
     }
 
     @GetMapping
-    List<ProductEntity> findAll(
-            @RequestParam(value = "search") String title,
-            @RequestParam(value = "pmin") Double pmin,
-            @RequestParam(value = "pmax") Double pmax,
-            @RequestParam(value = "available") Boolean available)
+    List<ProductRecord> findAll(
+            @RequestParam(value = "search", required = false) String title,
+            @RequestParam(value = "pmin", required = false) Double pmin,
+            @RequestParam(value = "pmax", required = false) Double pmax,
+            @RequestParam(value = "available", required = false) Boolean available)
     {
         return service.findFilteredProducts(title, pmin, pmax, available);
     }

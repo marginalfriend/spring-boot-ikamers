@@ -7,5 +7,5 @@ import java.util.UUID;
 
 @Repository // JpaRepository extends PagingAndSortingRepository it's like ListCrudRepository on steroid
 public interface ProductRepository extends JpaRepository<ProductEntity, UUID> {
-    List<ProductEntity> findAllByTitleLike(String title);
+    List<ProductEntity> findAllByTitleLikeIgnoreCase(String title);
 }
