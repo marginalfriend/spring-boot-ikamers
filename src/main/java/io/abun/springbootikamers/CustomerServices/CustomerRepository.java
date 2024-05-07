@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface CustomerRepository extends JpaRepository<CustomerEntity, UUID> {
-    List<CustomerEntity> findByNameLikeIgnoreCaseOrPhone(String name, String phone);
+    CustomerEntity findByNameIgnoreCaseOrPhone(String name, String phone);
     List<CustomerEntity> findAllByNameLikeIgnoreCase(String name);
     CustomerEntity findByBirth(Date date);
     List<CustomerEntity> findAllByMembership(Boolean isMember);

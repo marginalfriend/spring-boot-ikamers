@@ -5,5 +5,7 @@ import java.util.List;
 
 public interface CustomerService {
     List<CustomerRecord> findFilteredCustomers(String name, String phone, Date birth, Boolean membership);
-    List<CustomerRecord> findByNameOrPhone(String name, String phone);
+    CustomerRecord findByNameOrPhone(String name, String phone);
+
+    CustomerRecord addNewCustomer(CustomerEntity customer);
 }

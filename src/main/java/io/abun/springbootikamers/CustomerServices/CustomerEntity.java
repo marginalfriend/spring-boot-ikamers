@@ -19,9 +19,12 @@ public class CustomerEntity {
     @GeneratedValue(generator = "uuid-hibernate-generator")
     @GenericGenerator(name = "uuid-hibernate-generator", strategy = "org.hibernate.id.UUIDGenerator")
     UUID id;
+    @Column(nullable = false)
     String name;
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     String phone;
+    @Column(nullable = false)
     Date birth;
+    @Column(nullable = false)
     Boolean membership;
 }

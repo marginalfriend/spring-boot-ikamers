@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,21 +17,27 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<CustomerRecord> findByNameOrPhone(String name, String phone) {
-        List<CustomerRecord> result = new ArrayList<>();
+    public CustomerRecord findByNameOrPhone(String name, String phone) {
+        CustomerEntity ent = repository.findByNameIgnoreCaseOrPhone(name, phone);
 
-        List<CustomerEntity> entities = repository.findByNameLikeIgnoreCaseOrPhone(name, phone);
+        return new CustomerRecord(
+                ent.getName(),
+                ent.getPhone(),
+                ent.getBirth(),
+                ent.getMembership()
+        );
+    }
 
-        entities.forEach(cus -> {
-            result.add(new CustomerRecord(
-                    cus.getName(),
-                    cus.getPhone(),
-                    cus.getBirth(),
-                    cus.getMembership()
-            ));
-        });
+    @Override
+    public CustomerRecord addNewCustomer(CustomerEntity customer) {
+        CustomerEntity saved = repository.saveAndFlush(customer);
 
-        return result;
+        return new CustomerRecord(
+                saved.getName(),
+                saved.getPhone(),
+                saved.getBirth(),
+                saved.getMembership()
+        );
     }
 
 
