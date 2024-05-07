@@ -1,6 +1,9 @@
 package io.abun.springbootikamers.CustomerServices;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -12,6 +15,19 @@ import java.util.function.Consumer;
 public class CustomerServiceImpl implements CustomerService {
     @Autowired
     CustomerRepository repository;
+
+    static void resultShooter(List<CustomerRecord> result, List<CustomerEntity> raw) {
+        raw.forEach(e -> {
+            result.add(
+                    new CustomerRecord(
+                            e.getName(),
+                            e.getPhone(),
+                            e.getBirth(),
+                            e.getMembership()
+                    )
+            );
+        });
+    };
 
     @Override
     public List<CustomerRecord> findAllCustomer(String name, String phone, Date birth, Boolean membership) {
@@ -26,16 +42,8 @@ public class CustomerServiceImpl implements CustomerService {
             fromDb = repository.findAllByNameLikeIgnoreCase(name);
         }
 
-        Consumer<CustomerEntity> resultShooter = e -> {
-            result.add(
-                    new CustomerRecord(
-                            e.getName(),
-                            e.getPhone(),
-                            e.getBirth(),
-                            e.getMembership()
-                    )
-            );
-        };
+        // A lambda function for collection's "foreach" method
+        // We'll use it later for inserting query result of CustomerEntity into the CustomerRecord
 
         if (phone != null) {
             fromDb = fromDb.stream().filter(e -> e.getPhone().equals(phone)).toList();
@@ -49,7 +57,38 @@ public class CustomerServiceImpl implements CustomerService {
             fromDb = fromDb.stream().filter(e -> e.getMembership().equals(membership)).toList();
         }
 
-        fromDb.forEach(resultShooter);
+        resultShooter(result, fromDb);
+
+        return result;
+    }
+
+    @Override
+    public List<CustomerRecord> findAll(String name, String phone, Date birth, Boolean membership) {
+        List<CustomerRecord> result = new ArrayList<>();
+
+        Specification<CustomerEntity> spec = ((root, query, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            if (name != null) {
+                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("name")), '%' + name.toLowerCase() + '%'));
+            }
+
+            if (phone != null) {
+                predicates.add(criteriaBuilder.equal(root.get("phone"), phone));
+            }
+
+            if (birth != null) {
+                predicates.add(criteriaBuilder.equal(root.get("birth"), birth));
+            }
+
+            if (membership != null) {
+                predicates.add(criteriaBuilder.equal(root.get("membership"), membership));
+            }
+
+            return query.where(predicates.toArray(new Predicate[]{})).getRestriction();
+        });
+
+        resultShooter(result, repository.findAll(spec));
 
         return result;
     }

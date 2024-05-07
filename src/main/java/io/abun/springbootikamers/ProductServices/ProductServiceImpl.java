@@ -55,6 +55,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductRecord> findFilteredProducts(String title, Double pmin, Double pmax, Boolean available) {
         List<ProductRecord> result = new ArrayList<>();
+        List<ProductEntity> primarySearch;
 
         Consumer<ProductEntity> consumer = product -> {
             result.add(new ProductRecord(
@@ -66,14 +67,14 @@ public class ProductServiceImpl implements ProductService {
             ));
         };
 
+        // Findall
         if (title == null) {
-            repository.findAll().forEach(consumer);
-            return result;
+            primarySearch = repository.findAll();
+        } else {
+            primarySearch = repository.findAllByTitleLikeIgnoreCase('%' + title + '%');
         }
 
-        List<ProductEntity> primarySearch = repository.findAllByTitleLikeIgnoreCase('%' + title + '%');
-
-        // Filter functions
+        // Filter lambdas
         Predicate<ProductEntity> minPrice = product -> product.getPrice() >= pmin;
         Predicate<ProductEntity> maxPrice = product -> product.getPrice() <= pmax;
         Predicate<ProductEntity> isAvailable = product -> product.getStock() > 0;
@@ -91,7 +92,10 @@ public class ProductServiceImpl implements ProductService {
             primarySearch = primarySearch.stream().filter(isAvailable).toList();
         }
 
+        // Result packaging
         primarySearch.forEach(consumer);
+
+        //Result delivery
         return result;
     }
 

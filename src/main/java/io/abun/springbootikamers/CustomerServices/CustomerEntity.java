@@ -23,7 +23,6 @@ public class CustomerEntity {
     String name;
     @Column(unique = true, nullable = false)
     String phone;
-    @Temporal(TemporalType.DATE)
     @Column(nullable = false)
     Date birth;
     @Column(nullable = false)

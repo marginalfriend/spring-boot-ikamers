@@ -3,6 +3,9 @@ package io.abun.springbootikamers.CustomerServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
+import java.util.List;
+
 @RestController
 @RequestMapping("/customers")
 public class CustomerController {
@@ -10,8 +13,13 @@ public class CustomerController {
     CustomerService service;
 
     @GetMapping
-    public CustomerRecord findByNameOrPhone(@RequestParam String name, @RequestParam String phone) {
-        return service.findByNameOrPhone(name, phone);
+    public List<CustomerRecord> findAll(
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam(value = "phone", required = false) String phone,
+            @RequestParam(value = "birth", required = false) Date birth,
+            @RequestParam(value = "membership", required = false) Boolean member
+            ) {
+        return service.findAll(name, phone, birth, member);
     }
 
     @PostMapping
