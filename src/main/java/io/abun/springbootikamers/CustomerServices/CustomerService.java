@@ -1,11 +1,13 @@
 package io.abun.springbootikamers.CustomerServices;
 
-import java.sql.Date;
+import io.abun.springbootikamers.CustomerServices.DTO.CustomerNoID;
+import io.abun.springbootikamers.CustomerServices.DTO.Customer;
+
 import java.util.List;
 
 public interface CustomerService {
-    List<CustomerRecord> findAllCustomer(CustomerRequest request);
-    List<CustomerRecord> findAll(CustomerRequest request);
-    CustomerRecord findByNameOrPhone(String name, String phone);
-    CustomerRecord addNewCustomer(CustomerEntity customer);
+    List<CustomerNoID> findAllCustomer(Customer request);
+    List<CustomerNoID> findAll(Customer request);
+    CustomerNoID findByNameOrPhone(String name, String phone);
+    CustomerNoID addNewCustomer(CustomerEntity customer);
 }

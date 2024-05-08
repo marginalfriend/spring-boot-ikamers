@@ -1,11 +1,10 @@
-package io.abun.springbootikamers.CustomerServices;
+package io.abun.springbootikamers.CustomerServices.DTO;
 
 import java.sql.Date;
 
-public record CustomerRecord(
+public record CustomerNoID(
         String name,
         String phone,
         Date birth,
         Boolean membership
-) {
-}
+) {}

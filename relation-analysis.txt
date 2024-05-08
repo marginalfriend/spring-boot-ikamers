@@ -1,0 +1,75 @@
+TransactionDTOResponse (Consumed from user/client)
+
+1. Customer will choose the desired products to cart check out
+2. Front end will wrap those productID along with customerID in a single request containing :
+    - customerID
+    - productID
+    - quantity
+3. Backend (us) will have to execute the process using batch query :
+    1. Create a single Transaction with the corresponding customerID and transaction timestamp
+    2. Inserting products and the quantity into the transaction_detail table
+4. The JSON file will look like this :
+    Option A :
+
+    [
+        {
+            customerID : *****,
+            productID : *****,
+            quantity : **
+        },
+        {
+            customerID : *****,
+            productID : *****,
+            quantity : **
+        },
+        ...
+    ]
+
+    Option B :
+
+    {
+        customerID : *****,
+        orders :
+        [
+            {
+                productID : ****,
+                quantity : *****
+            },
+            {
+                productID : ****,
+                quantity : *****
+            },
+            ...
+        ]
+    }
+
+TransactionDTORequest (Produced for user/client)
+
+To give necessary information about the transaction we just have to response with this JSON :
+
+{
+    customerID : *****,
+    transactionDate : *****,
+    orders : [
+        {
+            productName : *****,
+            price : *****,
+            quantity : *****,
+            totalPrice : **********
+        },
+        {
+            productName : *****,
+            price : *****,
+            quantity : *****,
+            totalPrice : **********
+        }
+        ...
+    ]
+}
+
+We provide the information of price and quantity with the aggregation of the total price to optimize front-end performance
+
+The POJO will have these properties :
+- customerID
+- transactionDate
+- orders

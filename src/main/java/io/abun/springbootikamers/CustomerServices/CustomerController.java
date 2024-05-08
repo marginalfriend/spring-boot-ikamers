@@ -1,5 +1,7 @@
 package io.abun.springbootikamers.CustomerServices;
 
+import io.abun.springbootikamers.CustomerServices.DTO.CustomerNoID;
+import io.abun.springbootikamers.CustomerServices.DTO.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,14 +15,14 @@ public class CustomerController {
     CustomerService service;
 
     @GetMapping
-    public List<CustomerRecord> findAll (
+    public List<CustomerNoID> findAll (
             @RequestParam(value = "name", required = false) String name,
             @RequestParam(value = "phone", required = false) String phone,
             @RequestParam(value = "birth", required = false) Date birth,
             @RequestParam(value = "membership", required = false) Boolean member
             ) {
         // Wrap it with dem DTO
-        CustomerRequest request = CustomerRequest.builder()
+        Customer request = Customer.builder()
                 .name(name)
                 .phone(phone)
                 .birth(birth)
@@ -31,7 +33,7 @@ public class CustomerController {
     }
 
     @PostMapping
-    public CustomerRecord create(@RequestBody CustomerEntity newCustomer) {
+    public CustomerNoID create(@RequestBody CustomerEntity newCustomer) {
         return service.addNewCustomer(newCustomer);
     }
 }

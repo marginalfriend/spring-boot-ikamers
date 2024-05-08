@@ -1,6 +1,7 @@
 package io.abun.springbootikamers.CustomerServices;
 
-import jakarta.persistence.EntityManager;
+import io.abun.springbootikamers.CustomerServices.DTO.CustomerNoID;
+import io.abun.springbootikamers.CustomerServices.DTO.Customer;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -9,17 +10,16 @@ import org.springframework.stereotype.Service;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
     @Autowired
     CustomerRepository repository;
 
-    static void resultShooter(List<CustomerRecord> result, List<CustomerEntity> raw) {
+    static void resultShooter(List<CustomerNoID> result, List<CustomerEntity> raw) {
         raw.forEach(e -> {
             result.add(
-                    new CustomerRecord(
+                    new CustomerNoID(
                             e.getName(),
                             e.getPhone(),
                             e.getBirth(),
@@ -30,7 +30,7 @@ public class CustomerServiceImpl implements CustomerService {
     };
 
     @Override
-    public List<CustomerRecord> findAllCustomer(CustomerRequest params) {
+    public List<CustomerNoID> findAllCustomer(Customer params) {
         // Extract request params
         String name = params.getName();
         String phone = params.getPhone();
@@ -38,7 +38,7 @@ public class CustomerServiceImpl implements CustomerService {
         Boolean membership = params.getMembership();
 
         // Final result and query result container
-        List<CustomerRecord> result = new ArrayList<>();
+        List<CustomerNoID> result = new ArrayList<>();
         List<CustomerEntity> fromDb;
 
         // Querying based on name parameter availability
@@ -69,14 +69,14 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<CustomerRecord> findAll(CustomerRequest params) {
+    public List<CustomerNoID> findAll(Customer params) {
         // Extract request params
         String name = params.getName();
         String phone = params.getPhone();
         Date birth = params.getBirth();
         Boolean membership = params.getMembership();
 
-        List<CustomerRecord> result = new ArrayList<>();
+        List<CustomerNoID> result = new ArrayList<>();
 
         Specification<CustomerEntity> spec = ((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
@@ -106,10 +106,10 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerRecord findByNameOrPhone(String name, String phone) {
+    public CustomerNoID findByNameOrPhone(String name, String phone) {
         CustomerEntity ent = repository.findByNameIgnoreCaseOrPhone(name, phone);
 
-        return new CustomerRecord(
+        return new CustomerNoID(
                 ent.getName(),
                 ent.getPhone(),
                 ent.getBirth(),
@@ -118,10 +118,10 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerRecord addNewCustomer(CustomerEntity customer) {
+    public CustomerNoID addNewCustomer(CustomerEntity customer) {
         CustomerEntity saved = repository.saveAndFlush(customer);
 
-        return new CustomerRecord(
+        return new CustomerNoID(
                 saved.getName(),
                 saved.getPhone(),
                 saved.getBirth(),
