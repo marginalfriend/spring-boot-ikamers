@@ -4,8 +4,8 @@ import java.sql.Date;
 import java.util.List;
 
 public interface CustomerService {
-    List<CustomerRecord> findAllCustomer(String name, String phone, Date birth, Boolean membership);
-    List<CustomerRecord> findAll(String name, String phone, Date birth, Boolean membership);
+    List<CustomerRecord> findAllCustomer(CustomerRequest request);
+    List<CustomerRecord> findAll(CustomerRequest request);
     CustomerRecord findByNameOrPhone(String name, String phone);
     CustomerRecord addNewCustomer(CustomerEntity customer);
 }

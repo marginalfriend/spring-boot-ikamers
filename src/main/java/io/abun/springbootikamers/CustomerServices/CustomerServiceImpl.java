@@ -30,7 +30,13 @@ public class CustomerServiceImpl implements CustomerService {
     };
 
     @Override
-    public List<CustomerRecord> findAllCustomer(String name, String phone, Date birth, Boolean membership) {
+    public List<CustomerRecord> findAllCustomer(CustomerRequest params) {
+        // Extract request params
+        String name = params.getName();
+        String phone = params.getPhone();
+        Date birth = params.getBirth();
+        Boolean membership = params.getMembership();
+
         // Final result and query result container
         List<CustomerRecord> result = new ArrayList<>();
         List<CustomerEntity> fromDb;
@@ -63,7 +69,13 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<CustomerRecord> findAll(String name, String phone, Date birth, Boolean membership) {
+    public List<CustomerRecord> findAll(CustomerRequest params) {
+        // Extract request params
+        String name = params.getName();
+        String phone = params.getPhone();
+        Date birth = params.getBirth();
+        Boolean membership = params.getMembership();
+
         List<CustomerRecord> result = new ArrayList<>();
 
         Specification<CustomerEntity> spec = ((root, query, criteriaBuilder) -> {

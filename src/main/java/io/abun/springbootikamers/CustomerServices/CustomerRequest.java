@@ -1,4 +1,4 @@
-package io.abun.springbootikamers.DTO.Requests;
+package io.abun.springbootikamers.CustomerServices;
 
 import lombok.*;
 
