@@ -13,7 +13,7 @@ public class CustomerController {
     CustomerService service;
 
     @GetMapping
-    public List<CustomerRecord> findAll(
+    public List<CustomerRecord> findAll (
             @RequestParam(value = "name", required = false) String name,
             @RequestParam(value = "phone", required = false) String phone,
             @RequestParam(value = "birth", required = false) Date birth,
