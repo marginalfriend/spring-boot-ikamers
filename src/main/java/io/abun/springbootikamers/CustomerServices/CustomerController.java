@@ -19,7 +19,15 @@ public class CustomerController {
             @RequestParam(value = "birth", required = false) Date birth,
             @RequestParam(value = "membership", required = false) Boolean member
             ) {
-        return service.findAll(name, phone, birth, member);
+        // Wrap it with dem DTO
+        CustomerRequest request = CustomerRequest.builder()
+                .name(name)
+                .phone(phone)
+                .birth(birth)
+                .membership(member).build();
+
+        // Send the package
+        return service.findAll(request);
     }
 
     @PostMapping
