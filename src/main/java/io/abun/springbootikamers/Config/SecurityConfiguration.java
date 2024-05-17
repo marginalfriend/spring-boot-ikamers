@@ -1,5 +1,6 @@
 package io.abun.springbootikamers.Config;
 
+import jakarta.servlet.DispatcherType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -23,6 +24,13 @@ public class SecurityConfiguration {
 //						});
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(
+                        req -> {
+                            req.dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
+                                    .requestMatchers("auth/**").permitAll()
+                                    .anyRequest().authenticated();
+                        }
+                )
                 .build();
 
     }
