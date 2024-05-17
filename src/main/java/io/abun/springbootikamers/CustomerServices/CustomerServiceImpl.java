@@ -78,6 +78,7 @@ public class CustomerServiceImpl implements CustomerService {
 
         List<CustomerNoID> result = new ArrayList<>();
 
+        // Specification definition
         Specification<CustomerEntity> spec = ((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
@@ -100,6 +101,7 @@ public class CustomerServiceImpl implements CustomerService {
             return query.where(predicates.toArray(new Predicate[]{})).getRestriction();
         });
 
+        // Finding data that meet the specifications
         resultShooter(result, repository.findAll(spec));
 
         return result;
