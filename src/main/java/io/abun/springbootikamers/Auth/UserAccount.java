@@ -3,9 +3,11 @@ package io.abun.springbootikamers.Auth;
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import jakarta.persistence.*;
 
@@ -18,6 +20,7 @@ import java.util.UUID;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class UserAccount implements UserDetails {
     @Id
     @GeneratedValue(generator = "uuid-hibernate-generator")
@@ -34,18 +37,18 @@ public class UserAccount implements UserDetails {
     private Boolean isEnable;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private List<UserRole> userRole;
+    private List<Role> role;
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+            return role.stream().map(role -> new SimpleGrantedAuthority(role.getRole().name())).toList();
     }
 
     @Override
-    public String getPassword() {
-        return null;
-    }
+    public String getPassword(){
+            return password;
+        }
 
     @Override
     public String getUsername() {
