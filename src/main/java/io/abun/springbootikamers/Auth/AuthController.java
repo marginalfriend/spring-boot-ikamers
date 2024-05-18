@@ -1,6 +1,7 @@
 package io.abun.springbootikamers.Auth;
 
 import io.abun.springbootikamers.Auth.dto.AuthRequest;
+import io.abun.springbootikamers.Auth.dto.LoginResponse;
 import io.abun.springbootikamers.Auth.dto.RegisterResponse;
 import io.abun.springbootikamers.Auth.interfaces.AuthService;
 import io.abun.springbootikamers.Constants.CommonResponse;
@@ -30,5 +31,19 @@ public class AuthController {
         );
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PostMapping(path = "/login")
+    public ResponseEntity<CommonResponse<?>> login(@RequestBody AuthRequest request) {
+        LoginResponse loginResponse = authService.login(request);
+
+        CommonResponse<LoginResponse> response = new CommonResponse<>(
+                HttpStatus.OK.value(),
+                "Login success",
+                loginResponse,
+                null
+        );
+
+        return ResponseEntity.ok(response);
     }
 }
