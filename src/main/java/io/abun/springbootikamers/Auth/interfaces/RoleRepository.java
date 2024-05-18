@@ -1,4 +1,4 @@
-package io.abun.springbootikamers.Auth.abstraction;
+package io.abun.springbootikamers.Auth.interfaces;
 
 import io.abun.springbootikamers.Auth.Role;
 import io.abun.springbootikamers.Auth.UserRole;

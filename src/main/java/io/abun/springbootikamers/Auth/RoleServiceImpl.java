@@ -1,7 +1,7 @@
 package io.abun.springbootikamers.Auth;
 
-import io.abun.springbootikamers.Auth.abstraction.RoleRepository;
-import io.abun.springbootikamers.Auth.abstraction.RoleService;
+import io.abun.springbootikamers.Auth.interfaces.RoleRepository;
+import io.abun.springbootikamers.Auth.interfaces.RoleService;
 import org.springframework.stereotype.Service;
 
 @Service

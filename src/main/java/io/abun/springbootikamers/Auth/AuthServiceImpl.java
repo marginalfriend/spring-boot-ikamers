@@ -1,9 +1,9 @@
 package io.abun.springbootikamers.Auth;
 
-import io.abun.springbootikamers.Auth.abstraction.AuthService;
-import io.abun.springbootikamers.Auth.abstraction.JwtService;
-import io.abun.springbootikamers.Auth.abstraction.RoleService;
-import io.abun.springbootikamers.Auth.abstraction.UserAccountRepository;
+import io.abun.springbootikamers.Auth.interfaces.AuthService;
+import io.abun.springbootikamers.Auth.interfaces.JwtService;
+import io.abun.springbootikamers.Auth.interfaces.RoleService;
+import io.abun.springbootikamers.Auth.interfaces.UserAccountRepository;
 import io.abun.springbootikamers.Auth.dto.AuthRequest;
 import io.abun.springbootikamers.Auth.dto.LoginResponse;
 import io.abun.springbootikamers.Auth.dto.RegisterResponse;
