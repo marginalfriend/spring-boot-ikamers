@@ -1,6 +1,7 @@
 package io.abun.springbootikamers.Auth;
 
 import io.abun.springbootikamers.Auth.abstraction.AuthService;
+import io.abun.springbootikamers.Auth.abstraction.JwtService;
 import io.abun.springbootikamers.Auth.abstraction.RoleService;
 import io.abun.springbootikamers.Auth.abstraction.UserAccountRepository;
 import io.abun.springbootikamers.Auth.dto.AuthRequest;
@@ -8,7 +9,9 @@ import io.abun.springbootikamers.Auth.dto.LoginResponse;
 import io.abun.springbootikamers.Auth.dto.RegisterResponse;
 import io.abun.springbootikamers.CustomerServices.CustomerEntity;
 import io.abun.springbootikamers.CustomerServices.CustomerService;
-import io.abun.springbootikamers.CustomerServices.DTO.Customer;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -19,6 +22,8 @@ public class AuthServiceImpl implements AuthService {
     PasswordEncoder passwordEncoder;
     UserAccountRepository userAccountRepository;
     CustomerService customerService;
+    AuthenticationManager authenticationManager;
+    JwtService jwtService;
 
     @Override
     public RegisterResponse register(AuthRequest request) {
@@ -54,6 +59,16 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public LoginResponse login(AuthRequest request) {
-        return null;
+
+        Authentication authRequest = new UsernamePasswordAuthenticationToken(
+                request.username(),
+                request.password()
+        );
+
+        Authentication authenticated = authenticationManager.authenticate(authRequest);
+
+        UserAccount userAccount = (UserAccount) authenticated.getPrincipal();
+
+        String token = jwtService
     }
 }
