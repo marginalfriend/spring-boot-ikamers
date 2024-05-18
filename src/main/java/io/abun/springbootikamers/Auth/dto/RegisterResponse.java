@@ -1,4 +1,9 @@
 package io.abun.springbootikamers.Auth.dto;
 
-public record RegisterResponse() {
+import java.util.List;
+
+public record RegisterResponse(
+        String userName,
+        List<String> roles
+) {
 }

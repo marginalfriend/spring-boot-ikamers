@@ -9,6 +9,7 @@ import io.abun.springbootikamers.Auth.dto.RegisterResponse;
 import io.abun.springbootikamers.CustomerServices.CustomerEntity;
 import io.abun.springbootikamers.CustomerServices.CustomerService;
 import io.abun.springbootikamers.CustomerServices.DTO.Customer;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
@@ -39,6 +40,11 @@ public class AuthServiceImpl implements AuthService {
                 .build();
 
         customerService.addNewCustomer(customer);
+
+        return new RegisterResponse(
+          account.getUsername(),
+          account.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList()
+        );
     }
 
     @Override
