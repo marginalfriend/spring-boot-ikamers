@@ -2,6 +2,7 @@ package io.abun.springbootikamers.CustomerServices;
 
 import io.abun.springbootikamers.Auth.UserAccount;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -15,6 +16,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Getter
 @Setter
+@Builder
 public class CustomerEntity {
     @Id
     @GeneratedValue(generator = "uuid-hibernate-generator")

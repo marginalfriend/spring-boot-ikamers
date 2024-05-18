@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class RoleServiceImpl implements RoleService {
     RoleRepository repository;
+
     @Override
     public Role getOrSave(UserRole role) {
         return repository.findByRole(role).orElseGet(
